@@ -20,19 +20,15 @@ class View
 	 * Begin the render of views.
 	 * 
 	 * @param string $view Name of view.
+	 * @param string $url  Url of page.
+	 * 
 	 */
-	public function __construct($view = "")
+	public function __construct($view = "", $url = "")
 	{
-		Twig::register();
-		$load       = new LoadFile([PATH_LAYOUTS, PATH_VIEWS]);
-		self::$twig = new Environment($load);
-		$lexer      = new Lexer(self::$twig, ['tag_comment'   => ['[#','#]'],
-					        				  'tag_block'     => ['[%','%]'],
-					        				  'tag_variable'  => ['[[',']]'],
-					        				  'interpolation' => ['#[',']']]);
-		self::$twig->setLexer($lexer);
-		self::$view = $view . EXTENSION_TEMPLATES;
-		self::$var  = new \stdClass();
+		$this->config();
+		self::$view      = $view . EXTENSION_TEMPLATES;
+		self::$var       = new \stdClass();
+		self::$var->URL  = URL;
 	}
 	
 	//===============================================//
@@ -96,6 +92,25 @@ class View
 		}
 	}
 	
+	//===============================================//	
+
+	/**
+	 * Set config for twig.
+	 * 
+	 * @return void.
+	 */
+	private function config()
+	{
+		Twig::register();
+		$load       = new LoadFile([PATH_LAYOUTS, PATH_VIEWS]);
+		self::$twig = new Environment($load);
+		$lexer      = new Lexer(self::$twig, ['tag_comment'   => ['[#','#]'],
+					        				  'tag_block'     => ['[%','%]'],
+					        				  'tag_variable'  => ['[[',']]'],
+					        				  'interpolation' => ['#[',']']]);
+		self::$twig->setLexer($lexer);
+	}
+
 	//===============================================//	
 
 	/**

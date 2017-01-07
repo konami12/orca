@@ -34,7 +34,8 @@ class Core
 		{
 			//get class for namespace
 			$class = self::NAMESPACE_CONTROLLERS . $this->controller;
-			$this->controller = new $class($this->view);
+			$url   = $this->url;
+			$this->controller = new $class($this->view, $url);
 		}
 		else
 		{
@@ -85,7 +86,10 @@ class Core
 				$this->method = str_replace("-", '', $url[1]) . "Action";
 				$this->view   = strtolower($url[1]);
 			}
-				
+		}
+		else
+		{
+			$this->url .= str_replace("Action", ""$this->controller . $this->method);
 		}
 	}
 
@@ -116,4 +120,10 @@ class Core
 	 * @var string
 	 */
 	private $view = "index";
+	/**
+	 * Url of the page.
+	 *
+	 * @var string
+	 */
+	private $url = URL;
 }

@@ -12,7 +12,7 @@ class IndexController extends View
 	public function ajaxAction()
 	{
 		self::disabletLayout();
-		$v = ["powell" => 5];
+		$v = ["powell" => 15];
 		echo json_encode($v);
 	}
 
