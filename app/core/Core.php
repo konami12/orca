@@ -38,7 +38,7 @@ class Core
 		}
 		else
 		{
-			echo "Error 404s";
+			echo "Error 404";
 			exit;
 		}
 

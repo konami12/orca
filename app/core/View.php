@@ -43,11 +43,11 @@ class View
 	 * @param string $layout Name of layout.
 	 * @return void
 	 */
-	protected static function setLayout($layout = 'index')
+	protected function setLayout($layout = 'index')
 	{
 		self::$layout = $layout;
 	}
-	
+
 	//===============================================//
 	
 	/**
@@ -55,9 +55,21 @@ class View
 	 * 
 	 * @return string.
 	 */
-	protected static function getLayout()
+	protected function getLayout()
 	{
 		return self::$layout;
+	}
+
+	//===============================================//
+
+	/**
+	 * Disabled layout
+	 * 
+	 * @return void.
+	 */
+	protected function disabletLayout()
+	{
+		self::$layoutEnabled = false;
 	}
 
 	//===============================================//
@@ -71,8 +83,16 @@ class View
 	{
 		if (self::$layoutEnabled)
 		{
-			$this->setVar();
-			echo self::$twig->render(self::$layout . EXTENSION_TEMPLATES , ['content' => self::$view]);
+			try
+			{
+				$this->setVar();
+				echo self::$twig->render(self::$layout . EXTENSION_TEMPLATES, ['content' => self::$layout . '/' . self::$view]);	
+			}
+			catch(Exception $e)
+			{
+				echo $e->getMessage();
+				die();
+			}
 		}
 	}
 	
@@ -99,10 +119,35 @@ class View
 
 	//===============================================//	
 
-	static private $twig   = '';
-	static private $view   = '';
+	/**
+	 * Name layout that render.
+	 * 
+	 * @var string
+	 */
 	static private $layout = 'index';
-	static protected $var    = '';
-	static protected $layoutEnabled = true; 
+	/**
+	 * Enabled or disbled the layout
+	 * 
+	 * @var boolean
+	 */
+	static private $layoutEnabled = true; 
+	/**
+	 * Instance of twig.
+	 * 
+	 * @var Twig_Environment
+	 */
+	static private $twig = '';
+	/**
+	 * Name of view.
+	 * 
+	 * @var stirng.
+	 */
+	static private $view = '';
+	/**
+	 * List of variables.
+	 * 
+	 * @var stdClass.
+	 */
+	static protected $var = '';
 
 }

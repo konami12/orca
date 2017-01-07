@@ -8,7 +8,7 @@
 	"autoload" : {
 		"psr-4" : {
 			"Core\\"      : "app/core/",
-			"Controllers\\" : "app/nomina/controllers"
+			"Controllers\\" : "app/application/controllers"
 		}
 	}
 }
