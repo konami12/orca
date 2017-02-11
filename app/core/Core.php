@@ -34,8 +34,7 @@ class Core
 		{
 			//get class for namespace
 			$class = self::NAMESPACE_CONTROLLERS . $this->controller;
-			$url   = $this->url;
-			$this->controller = new $class($this->view, $url);
+			$this->controller = new $class($this->config);
 		}
 		else
 		{
@@ -73,24 +72,25 @@ class Core
 	 */
 	private function getControllerClass()
 	{
+		$controller = "index";
 		if (isset($_GET["url"]))
 		{
-			$url = rtrim($_GET["url"] , '/');
-			$url = filter_var($url, FILTER_SANITIZE_URL);
-			$url = ucfirst($url);
-			$url = ucwords($url, '-');
-			$url = explode('/', $url);
+			$url              = rtrim($_GET["url"] , '/');
+			$url              = filter_var($url, FILTER_SANITIZE_URL);
+			$url              = ucfirst($url);
+			$url              = ucwords($url, '-');
+			$url              = explode('/', $url);
 			$this->controller = $url[0] . "Controller";
+			$controllers      = $url[0];
 			if (isset($url[1]))
 			{
 				$this->method = str_replace("-", '', $url[1]) . "Action";
 				$this->view   = strtolower($url[1]);
 			}
 		}
-		else
-		{
-			$this->url .= str_replace("Action", ""$this->controller . $this->method);
-		}
+		
+		$this->config = ['view' => $this->view,
+						 'url'  => $controller . "/" .  $this->view];
 	}
 
 	//===============================================//
@@ -120,10 +120,4 @@ class Core
 	 * @var string
 	 */
 	private $view = "index";
-	/**
-	 * Url of the page.
-	 *
-	 * @var string
-	 */
-	private $url = URL;
 }

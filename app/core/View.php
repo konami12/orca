@@ -18,18 +18,21 @@ class View
 {
 	/**
 	 * Begin the render of views.
-	 * 
-	 * @param string $view Name of view.
-	 * @param string $url  Url of page.
+	 *
+	 * @param string $controller Name of controller.
+	 * @param string $view       Name of view.
+	 * @param string $url        Url of page.
 	 * 
 	 */
-	public function __construct($view = "", $url = "")
+	public function __construct($config)
 	{
 		$this->config();
-		self::$view      = $view . EXTENSION_TEMPLATES;
+		self::$view      = $config['view'] . EXTENSION_TEMPLATES;
 		self::$var       = new \stdClass();
 		self::$var->URL  = URL;
-	}
+		self::$var->PAGE = URL . $config['url'];
+		self::$content   = $config['url'];
+ 	}
 	
 	//===============================================//
 
@@ -82,7 +85,7 @@ class View
 			try
 			{
 				$this->setVar();
-				echo self::$twig->render(self::$layout . EXTENSION_TEMPLATES, ['content' => self::$layout . '/' . self::$view]);	
+				echo self::$twig->render(self::$layout . EXTENSION_TEMPLATES, ['content' => self::$content . EXTENSION_TEMPLATES]);	
 			}
 			catch(Exception $e)
 			{
@@ -134,6 +137,14 @@ class View
 
 	//===============================================//	
 
+
+	/**
+
+	 * List of variables.
+	 * 
+	 * @var stdClass.
+	 */
+	static protected $var = '';
 	/**
 	 * Name layout that render.
 	 * 
@@ -159,10 +170,9 @@ class View
 	 */
 	static private $view = '';
 	/**
-	 * List of variables.
-	 * 
-	 * @var stdClass.
+	 * Content of view.
+	 *
+	 * @var string.
 	 */
-	static protected $var = '';
-
+	static private $content = 'index/index';
 }
