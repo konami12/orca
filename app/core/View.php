@@ -6,8 +6,10 @@ use Twig_Autoloader as Twig;
 use Twig_Loader_Filesystem as LoadFile;
 use Twig_Environment as Environment;
 use Twig_Lexer as Lexer;
+use Modules\DependencyLoader as Loader;
+
 /**
- * Render of view.
+ * Renderea la vista.
  * 
  * @category   core
  * @package    app_core
@@ -17,11 +19,11 @@ use Twig_Lexer as Lexer;
 class View
 {
 	/**
-	 * Begin the render of views.
+	 * Inicia el rendereo de las vistas.
 	 *
-	 * @param string $controller Name of controller.
-	 * @param string $view       Name of view.
-	 * @param string $url        Url of page.
+	 * @param string $controller Nombre del controlador.
+	 * @param string $view       Nombre de la vista.
+	 * @param string $url        Url de la pagina.
 	 * 
 	 */
 	public function __construct($config)
@@ -32,15 +34,16 @@ class View
 		self::$var->URL  = URL;
 		self::$var->PAGE = URL . $config['url'];
 		self::$content   = $config['url'];
+		self::$loader    = Loader::getInstance();
  	}
 	
 	//===============================================//
 
 	/**
-	 * Set the layout for the view.
+	 * Asigna el layout para la vista.
 	 * 
-	 * @param string $layout Name of layout.
-	 * @return void
+	 * @param string $layout Nombre del layout.
+	 * @return void.
 	 */
 	protected function setLayout($layout = 'index')
 	{
@@ -50,7 +53,7 @@ class View
 	//===============================================//
 	
 	/**
-	 * Get the name of layout.
+	 * Consigue el nombre del layout.
 	 * 
 	 * @return string.
 	 */
@@ -62,7 +65,7 @@ class View
 	//===============================================//
 
 	/**
-	 * Disabled layout
+	 * Deshabilita el layout de la vista;
 	 * 
 	 * @return void.
 	 */
@@ -74,7 +77,7 @@ class View
 	//===============================================//
 	
 	/**
-	 * Render the view.
+	 * Renderea la vista.
 	 *
 	 * @return void.
 	 */
@@ -98,7 +101,7 @@ class View
 	//===============================================//	
 
 	/**
-	 * Set config for twig.
+	 * Prepara la configuracion para twig.
 	 * 
 	 * @return void.
 	 */
@@ -117,7 +120,7 @@ class View
 	//===============================================//	
 
 	/**
-	 * Set all variables.
+	 * Pasa las variables a la vista.
 	 *
 	 * @return void.
 	 */
@@ -137,40 +140,44 @@ class View
 
 	//===============================================//	
 
-
 	/**
-
-	 * List of variables.
+	 * Listado de variables.
 	 * 
 	 * @var stdClass.
 	 */
 	static protected $var = '';
 	/**
-	 * Name layout that render.
+	 * Instancide de DependencyLoader.
+	 * 
+	 * @var Modules\DependencyLoader.
+	 */
+	static protected $loader = '';
+	/**
+	 * Nombre del layout que se desa renderear.
 	 * 
 	 * @var string
 	 */
 	static private $layout = 'index';
 	/**
-	 * Enabled or disbled the layout
+	 * Deshabilita el template.
 	 * 
 	 * @var boolean
 	 */
 	static private $layoutEnabled = true; 
 	/**
-	 * Instance of twig.
+	 * Instancia de twig.
 	 * 
 	 * @var Twig_Environment
 	 */
 	static private $twig = '';
 	/**
-	 * Name of view.
+	 * Nombre de la vista.
 	 * 
 	 * @var stirng.
 	 */
 	static private $view = '';
 	/**
-	 * Content of view.
+	 * Contenido por default.
 	 *
 	 * @var string.
 	 */

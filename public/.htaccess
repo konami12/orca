@@ -15,5 +15,13 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-l
 
+#Variables 
+
+setEnv TYPE ""
+setEnv USER "8Q0HmLTAMPHqY+zC2kCaRzviM3EgK9nW1cJimPeF1HY="
+setEnv PASS "8Q0HmLTAMPHqY+zC2kCaRzviM3EgK9nW1cJimPeF1HY=" 
+setEnv BASE "ZMEfqESdGoXoxSQy5dFUvjO/W3mWKIBZB5ugMD3MZuQ="
+
+
 RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
 ErrorDocument 403 /index
